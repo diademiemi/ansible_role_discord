@@ -17,7 +17,7 @@ An actively running desktop environment is needed. This is needed so that Discor
 |----------|---------|-------------|
 | `discord_version` | `discord` | Version of Discord to install. Valid options are: `[discord, canary, ptb]` |
 | `discord_install_betterdiscord` | `false` | Whether to install BetterDiscord or not. |
-| `discord_user` | `{{ ansible_user }}` | User to install Discord for. |
+| `discord_user` | `{{ ansible_user }}` | User to install BetterDiscord with. |
 
 ## Installing plugins and themes
 To install plugins and themes for BetterDiscord, define the `discord_betterdiscord_plugins` and `discord_betterdiscord_themes` variables.
