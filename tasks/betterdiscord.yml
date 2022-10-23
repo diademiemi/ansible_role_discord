@@ -1,0 +1,55 @@
+---
+- name: Get betterdiscordctl
+  become: true
+  ansible.builtin.get_url:
+    url: "{{ betterdiscordctl_url }}"
+    dest: /usr/local/bin/betterdiscordctl
+    mode: 0755
+
+- name: Launch Discord
+  become: true
+  become_user: "{{ discord_user }}"
+  ansible.builtin.shell: "timeout 15s {{ discord_version_map[discord_version].install_dir }}/{{ discord_version_map[discord_version].executable }}; sleep 10; /bin/true"
+  ignore_errors: true
+  changed_when: false
+  environment:
+    DISPLAY: ':0'
+
+- name: Read Discord build info file
+  ansible.builtin.slurp:
+    src: "{{ discord_version_map[discord_version].install_dir }}/resources/build_info.json"
+  register: discord_build_info
+
+- name: Get Discord version
+  ansible.builtin.set_fact:
+    discord_versionnum: "{{ discord_build_info['content'] | b64decode | from_json | json_query('version') }}"
+
+- name: Install BetterDiscord
+  become: true
+  become_user: "{{ discord_user }}"
+  ansible.builtin.command: "betterdiscordctl --verbose --d-modules
+    {{ discord_version_map[discord_version].config_dir }}/{{ discord_versionnum }}/modules install"
+  register: betterdiscordctl_install
+  failed_when: betterdiscordctl_install.rc != 0 and "Already installed" not in betterdiscordctl_install.stderr
+  changed_when: betterdiscordctl_install.rc == 0
+
+- name: Download BetterDiscord plugins
+  become: true
+  become_user: "{{ discord_user }}"
+  ansible.builtin.get_url:
+    url: "{{ item }}"
+    dest: "~/.config/BetterDiscord/plugins/"
+    mode: 0644
+  when: discord_betterdiscord_plugins is defined
+  loop: "{{ discord_betterdiscord_plugins }}"
+
+- name: Download BetterDiscord themes
+  become: true
+  become_user: "{{ discord_user }}"
+  ansible.builtin.get_url:
+    url: "{{ item.url }}"
+    dest: "~/.config/BetterDiscord/themes/{{ item.name }}.theme.css"
+    mode: 0644
+  when: discord_betterdiscord_themes is defined
+  loop: "{{ discord_betterdiscord_themes }}"
+

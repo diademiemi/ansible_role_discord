@@ -1,0 +1,38 @@
+---
+- name: Install dependencies on RedHat
+  become: true
+  ansible.builtin.yum:
+    name:
+      - libatomic.x86_64
+  when: ansible_os_family == 'RedHat'
+
+- name: Download Discord
+  become: true
+  ansible.builtin.get_url:
+    url: "{{ discord_version_map[discord_version].download_url }}"
+    dest: /tmp/discord-{{ discord_version }}.tar.gz
+    mode: 0644
+
+- name: Ensure Discord directory exists
+  become: true
+  ansible.builtin.file:
+    path: "{{ discord_version_map[discord_version].install_dir }}"
+    state: directory
+    mode: 0755
+
+- name: Extract Discord
+  become: true
+  ansible.builtin.unarchive:
+    src: /tmp/discord-{{ discord_version }}.tar.gz
+    dest: "{{ discord_version_map[discord_version].install_dir }}"
+    remote_src: true
+    extra_opts:
+      - --strip-components=1
+
+- name: Create desktop entry
+  become: true
+  ansible.builtin.copy:
+    src: "{{ discord_version_map[discord_version].install_dir }}/{{ discord_version_map[discord_version].desktop_entry }}"
+    dest: "/usr/share/applications/discord{{ discord_version_map[discord_version].desktop_entry }}"
+    remote_src: true
+    mode: 0644

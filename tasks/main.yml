@@ -1,0 +1,8 @@
+---
+- name: Import install tasks
+  import_tasks: install.yml
+  tags: install
+- name: Import BetterDiscord tasks
+  import_tasks: betterdiscord.yml
+  tags: betterdiscord
+  when: discord_install_betterdiscord

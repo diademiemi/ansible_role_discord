@@ -1,0 +1,30 @@
+---
+discord_version: discord # Options: [discord, canary, ptb]
+discord_install_betterdiscord: false
+discord_user: "{{ ansible_user }}"
+
+# Don't change this unless you know what you're doing
+discord_version_map:
+  discord:
+    download_url: |
+      https://discord.com/api/download?platform=linux&format=tar.gz
+    executable: Discord
+    desktop_entry: discord.desktop
+    install_dir: /usr/share/discord
+    config_dir: ~/.config/discord
+  canary:
+    download_url: |
+      https://discord.com/api/download/canary?platform=linux&format=tar.gz
+    executable: DiscordCanary
+    desktop_entry: discord-canary.desktop
+    install_dir: /usr/share/discord-canary
+    config_dir: ~/.config/discordcanary
+  ptb:
+    download_url: |
+      https://discord.com/api/download/ptb?platform=linux&format=tar.gz
+    executable: DiscordPTB
+    desktop_entry: discord-ptb.desktop
+    install_dir: /usr/share/discord-ptb
+    config_dir: ~/.config/discordptb
+
+betterdiscordctl_url: "https://raw.githubusercontent.com/bb010g/betterdiscordctl/master/betterdiscordctl"
