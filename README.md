@@ -21,7 +21,7 @@ An actively running desktop environment is needed. This is needed so that Discor
 
 ## Installing plugins and themes
 To install plugins and themes for BetterDiscord, define the `discord_betterdiscord_plugins` and/or `discord_betterdiscord_themes` variables.
-```
+```yaml
 discord_betterdiscord_plugins:
   - "https://example.com/plugin.plugin.js"
   - "https://example.com/another.plugin.js"
@@ -33,7 +33,7 @@ discord_betterdiscord_themes:
 
 <details> <summary> Example </summary>
 
-```
+```yaml
 discord_betterdiscord_plugins:
   - "https://raw.githubusercontent.com/rauenzi/BetterDiscordAddons/master/Plugins/BetterRoleColors/BetterRoleColors.plugin.js"
 
