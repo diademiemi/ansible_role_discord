@@ -1,7 +1,7 @@
 ---
 discord_version: discord # Options: [discord, canary, ptb]
 discord_install_betterdiscord: false
-discord_user: "{{ ansible_user }}"
+discord_user: "{{ ansible_user_id }}"
 
 # Don't change this unless you know what you're doing
 discord_version_map:
@@ -28,3 +28,4 @@ discord_version_map:
     config_dir: ~/.config/discordptb
 
 betterdiscordctl_url: "https://raw.githubusercontent.com/bb010g/betterdiscordctl/master/betterdiscordctl"
+betterdiscord_config_dir: ~/.config/BetterDiscord
