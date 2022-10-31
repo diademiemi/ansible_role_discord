@@ -6,15 +6,6 @@
     dest: /usr/local/bin/betterdiscordctl
     mode: 0755
 
-- name: Launch Discord
-  become: true
-  become_user: "{{ discord_user }}"
-  ansible.builtin.shell: "timeout 15s {{ discord_version_map[discord_version].install_dir }}/{{ discord_version_map[discord_version].executable }}; sleep 10; /bin/true"
-  ignore_errors: true
-  changed_when: false
-  environment:
-    DISPLAY: ':0'
-
 - name: Read Discord build info file
   ansible.builtin.slurp:
     src: "{{ discord_version_map[discord_version].install_dir }}/resources/build_info.json"
@@ -24,6 +15,16 @@
   ansible.builtin.set_fact:
     discord_versionnum: "{{ discord_build_info['content'] | b64decode | from_json | json_query('version') }}"
 
+- name: Launch Discord one time to generate modules directory
+  become: true
+  become_user: "{{ discord_user }}"
+  ansible.builtin.shell: "timeout 15s {{ discord_version_map[discord_version].install_dir }}/{{ discord_version_map[discord_version].executable }}; sleep 10; /bin/true"
+  ignore_errors: true
+  environment:
+    DISPLAY: ':0'
+  args:
+    creates: "{{ discord_version_map[discord_version].config_dir }}/{{ discord_versionnum }}"
+
 - name: Install BetterDiscord
   become: true
   become_user: "{{ discord_user }}"
@@ -32,6 +33,17 @@
   register: betterdiscordctl_install
   failed_when: betterdiscordctl_install.rc != 0 and "Already installed" not in betterdiscordctl_install.stderr
   changed_when: betterdiscordctl_install.rc == 0
+
+- name: Launch Discord one time to generate plugins and themes directory
+  become: true
+  become_user: "{{ discord_user }}"
+  ansible.builtin.shell: "timeout 15s {{ discord_version_map[discord_version].install_dir }}/{{ discord_version_map[discord_version].executable }}; sleep 10; /bin/true"
+  ignore_errors: true
+  environment:
+    DISPLAY: ':0'
+  when: discord_betterdiscord_plugins is defined or discord_betterdiscord_themes is defined
+  args:
+    creates: "{{ betterdiscord_config_dir }}/plugins"
 
 - name: Download BetterDiscord plugins
   become: true
