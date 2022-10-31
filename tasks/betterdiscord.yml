@@ -64,4 +64,3 @@
     mode: 0644
   when: discord_betterdiscord_themes is defined
   loop: "{{ discord_betterdiscord_themes }}"
-
