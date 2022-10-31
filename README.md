@@ -1,8 +1,8 @@
 # Ansible Role Discord
 This is an Ansible role that installs Discord on Linux. It uses the tarball from the official website so this role is not dependent on any package manager.  
-It can also optionally install BetterDiscord, a client mod that allows for plugin loading.
+It can also optionally install BetterDiscord, a client mod that allows for plugin loading.  
 
-Tested on Fedora 36, should work on any Linux distribution that the Discord tarball supports.
+Tested on Fedora 36, should work on any Linux distribution that the Discord tarball supports.  
 
 ## Requirements
 
@@ -17,10 +17,10 @@ An actively running desktop environment is needed. This is needed so that Discor
 |----------|---------|-------------|
 | `discord_version` | `discord` | Version of Discord to install. Valid options are: `[discord, canary, ptb]` |
 | `discord_install_betterdiscord` | `false` | Whether to install BetterDiscord or not. |
-| `discord_user` | `{{ ansible_user }}` | User to install BetterDiscord with. |
+| `discord_user` | `{{ ansible_user_id }}` | User to install BetterDiscord with. |
 
 ## Installing plugins and themes
-To install plugins and themes for BetterDiscord, define the `discord_betterdiscord_plugins` and `discord_betterdiscord_themes` variables.
+To install plugins and themes for BetterDiscord, define the `discord_betterdiscord_plugins` and/or `discord_betterdiscord_themes` variables.
 ```
 discord_betterdiscord_plugins:
   - "https://example.com/plugin.plugin.js"
