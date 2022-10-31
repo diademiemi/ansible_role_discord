@@ -1,6 +1,7 @@
 galaxy_info:
   author: diademiemi
   description: Ansible role to install Discord on Linux. With an option to configure BetterDiscord 
+  role_name: discord
 
   # If the issue tracker for your role is not on github, uncomment the
   # next line and provide a value
