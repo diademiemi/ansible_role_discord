@@ -4,7 +4,16 @@
   ansible.builtin.yum:
     name:
       - libatomic.x86_64
+    state: present
   when: ansible_os_family == 'RedHat'
+
+- name: Install dependencies on Debian
+  become: true
+  ansible.builtin.apt:
+    name:
+      - curl
+    state: present
+  when: ansible_os_family == 'Debian'
 
 - name: Download Discord
   become: true
