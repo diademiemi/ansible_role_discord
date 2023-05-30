@@ -2,9 +2,9 @@
 - name: Get betterdiscordctl
   become: true
   ansible.builtin.get_url:
-    url: "{{ betterdiscordctl_url }}"
+    url: "{{ discord_betterdiscordctl_url }}"
     dest: /usr/local/bin/betterdiscordctl
-    mode: 0755
+    mode: "0755"
 
 - name: Read Discord build info file
   ansible.builtin.slurp:
@@ -18,8 +18,9 @@
 - name: Launch Discord one time to generate modules directory
   become: true
   become_user: "{{ discord_user }}"
-  ansible.builtin.shell: "timeout 15s {{ discord_version_map[discord_version].install_dir }}/{{ discord_version_map[discord_version].executable }}; sleep 10; /bin/true"
-  ignore_errors: true
+  ansible.builtin.shell: "timeout 15s {{ discord_version_map[discord_version].install_dir }}/
+    {{ discord_version_map[discord_version].executable }}; sleep 10; /bin/true"
+  failed_when: false
   environment:
     DISPLAY: ':0'
   args:
@@ -37,13 +38,14 @@
 - name: Launch Discord one time to generate plugins and themes directory
   become: true
   become_user: "{{ discord_user }}"
-  ansible.builtin.shell: "timeout 15s {{ discord_version_map[discord_version].install_dir }}/{{ discord_version_map[discord_version].executable }}; sleep 10; /bin/true"
-  ignore_errors: true
+  ansible.builtin.shell: "timeout 15s {{ discord_version_map[discord_version].install_dir }}/
+    {{ discord_version_map[discord_version].executable }}; sleep 10; /bin/true"
+  failed_when: false # Just needs to generate the directories
   environment:
     DISPLAY: ':0'
   when: discord_betterdiscord_plugins is defined or discord_betterdiscord_themes is defined
   args:
-    creates: "{{ betterdiscord_config_dir }}/plugins"
+    creates: "{{ discord_betterdiscord_config_dir }}/plugins"
 
 - name: Download BetterDiscord plugins
   become: true
@@ -51,8 +53,8 @@
   ansible.builtin.get_url:
     url: "{{ item }}"
     dest: "~/.config/BetterDiscord/plugins/"
-    mode: 0644
-  when: discord_betterdiscord_plugins is defined
+    mode: "0644"
+  when: discord_betterdiscord_plugins | length > 0
   loop: "{{ discord_betterdiscord_plugins }}"
 
 - name: Download BetterDiscord themes
@@ -61,6 +63,6 @@
   ansible.builtin.get_url:
     url: "{{ item.url }}"
     dest: "~/.config/BetterDiscord/themes/{{ item.name }}.theme.css"
-    mode: 0644
-  when: discord_betterdiscord_themes is defined
+    mode: "0644"
+  when: discord_betterdiscord_themes | length > 0
   loop: "{{ discord_betterdiscord_themes }}"

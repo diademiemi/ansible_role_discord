@@ -1,0 +1,10 @@
+---
+- name: Install dependencies on RedHat
+  become: true
+  ansible.builtin.yum:
+    name:
+      - libatomic
+      - curl
+    state: present
+
+...

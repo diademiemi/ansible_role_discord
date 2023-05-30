@@ -27,5 +27,13 @@ discord_version_map:
     install_dir: /usr/share/discord-ptb
     config_dir: ~/.config/discordptb
 
-betterdiscordctl_url: "https://raw.githubusercontent.com/bb010g/betterdiscordctl/master/betterdiscordctl"
-betterdiscord_config_dir: ~/.config/BetterDiscord
+discord_betterdiscordctl_url: "https://raw.githubusercontent.com/bb010g/betterdiscordctl/master/betterdiscordctl"
+discord_betterdiscord_config_dir: ~/.config/BetterDiscord
+
+discord_betterdiscord_plugins: []
+# - "https://raw.githubusercontent.com/..."
+
+discord_betterdiscord_themes: []
+# - name: Theme
+#   url: https://raw.githubusercontent.com/...
+...

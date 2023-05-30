@@ -1,33 +1,17 @@
 ---
-- name: Install dependencies on RedHat
-  become: true
-  ansible.builtin.yum:
-    name:
-      - libatomic.x86_64
-    state: present
-  when: ansible_os_family == 'RedHat'
-
-- name: Install dependencies on Debian
-  become: true
-  ansible.builtin.apt:
-    name:
-      - curl
-    state: present
-  when: ansible_os_family == 'Debian'
-
 - name: Download Discord
   become: true
   ansible.builtin.get_url:
     url: "{{ discord_version_map[discord_version].download_url }}"
     dest: /tmp/discord-{{ discord_version }}.tar.gz
-    mode: 0644
+    mode: "0644"
 
 - name: Ensure Discord directory exists
   become: true
   ansible.builtin.file:
     path: "{{ discord_version_map[discord_version].install_dir }}"
     state: directory
-    mode: 0755
+    mode: "0755"
 
 - name: Extract Discord
   become: true
@@ -44,4 +28,9 @@
     src: "{{ discord_version_map[discord_version].install_dir }}/{{ discord_version_map[discord_version].desktop_entry }}"
     dest: "/usr/share/applications/discord{{ discord_version_map[discord_version].desktop_entry }}"
     remote_src: true
-    mode: 0644
+    mode: "0644"
+
+- name: Include BetterDiscord tasks
+  ansible.builtin.include_tasks: setup/betterdiscord.yml
+  when: discord_install_betterdiscord
+...
