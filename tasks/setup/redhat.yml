@@ -2,9 +2,7 @@
 - name: Install dependencies on RedHat
   become: true
   ansible.builtin.yum:
-    name:
-      - libatomic
-      - curl
+    name: "{{ discord_package_requirements }}"
     state: present
 
 ...
