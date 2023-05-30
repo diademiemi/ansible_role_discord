@@ -2,8 +2,7 @@
 - name: Install dependencies on Debian
   become: true
   ansible.builtin.apt:
-    name:
-      - curl
+    name: "{{ discord_package_requirements }}"
     state: present
 
 ...

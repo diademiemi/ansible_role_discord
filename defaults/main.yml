@@ -3,6 +3,8 @@ discord_version: discord # Options: [discord, canary, ptb]
 discord_install_betterdiscord: false
 discord_user: "{{ ansible_user_id }}"
 
+discord_package_requirements: "{{ _discord_package_requirements }}"
+
 # Don't change this unless you know what you're doing
 discord_version_map:
   discord:
