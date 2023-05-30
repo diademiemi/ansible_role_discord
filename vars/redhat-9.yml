@@ -1,6 +1,5 @@
 ---
 _discord_package_requirements:
   - libatomic
-  - curl
 
 ...
