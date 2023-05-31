@@ -1,5 +1,6 @@
 yamllint
 ansible-lint
 ansible
+ansible-compat==3.0.2
 molecule
 molecule-plugins[podman]
