@@ -17,7 +17,7 @@ These platforms are supported:
 - EL 9 (Tested on Rocky Linux 9)  
 - Fedora 38  
 
-<!-- 
+<!--
 - List hardware requirements here  
 -->
 

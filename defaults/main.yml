@@ -1,5 +1,5 @@
 ---
-discord_version: discord # Options: [discord, canary, ptb]
+discord_version: discord  # Options: [discord, canary, ptb]
 discord_install_betterdiscord: false
 discord_user: "{{ ansible_user_id }}"
 
