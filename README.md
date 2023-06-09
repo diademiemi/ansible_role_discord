@@ -70,10 +70,10 @@ Example Playbook
 ----------------
 
 ```yaml
+- name: Use diademiemi.discord role
+  hosts: "{{ target | default('discord') }}"
+  roles:
     - role: "diademiemi.discord"
-      vars:
-        __role_action: # Variable to control which tasks are ran
-          - "setup" # Default if none is given
       tags: ['diademiemi', 'discord', 'setup']    ```
 
 ```
