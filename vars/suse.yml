@@ -1,0 +1,7 @@
+---
+_discord_package_requirements:
+  - curl
+  - gzip
+  - tar
+
+...

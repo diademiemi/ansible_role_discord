@@ -1,0 +1,8 @@
+---
+- name: Install dependencies on Debian
+  become: true
+  community.general.zypper:
+    name: "{{ discord_package_requirements }}"
+    state: present
+
+...

@@ -31,6 +31,6 @@
     mode: "0644"
 
 - name: Include BetterDiscord tasks
-  ansible.builtin.include_tasks: setup/betterdiscord.yml
+  ansible.builtin.include_tasks: setup/common/betterdiscord.yml
   when: discord_install_betterdiscord
 ...
